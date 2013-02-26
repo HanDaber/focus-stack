@@ -1,0 +1,38 @@
+extends layout
+
+block content
+	h1= title
+	form(action="/vid", 
+		method="post", 
+		enctype="multipart/form-data")
+		input(name="vid", 
+			type="file")
+		input(value="go", type="submit")
+	video(id="video", 
+		width="50%",  
+		controls="true")
+		source(src="/video/vid.mp4")
+	br
+	.fps
+		h3 Framerate to capture: 
+			em#fps
+	form(name="poop")
+		input(type="range", 
+			id="farps", 
+			min="0.25", 
+			max="3", 
+			step="0.25", 
+			name="fps", 
+			value="1",
+			onchange="fps_range.render()")
+	button(onclick="frame_grabber.start()") Start
+	div(id="container", style="border:none")
+		canvas#imageView(width="960", height="540")
+	form#stack(action="/stack", 
+		method="post", 
+		enctype="multipart/form-data")
+		input(name="stack", 
+			type="file",
+			multiple="multiple")
+	button(onclick="submit_stack()")
+	#imgs
