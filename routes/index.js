@@ -10,9 +10,9 @@ exports.index = function ( req, res ) {
 
 exports.upload = function ( req, res, next ) {
 	if( req.files ) {
-		console.dir(req.files.upload.path)
+		console.dir(req.files.vid.path)
 
-		save_file('public/video/vid.mp4');
+		save_file(req.files.vid.path, 'public/video/vid.mp4', next);
 
 	} else {
 		res.send('no file');
@@ -23,9 +23,9 @@ exports.save = function( req, res ) {
 	save_file('public/images/stack_' + Date.now);
 };
 
-function save_file ( dest, next ) {
-	// get the temporary location of the file
-	var tmp_path = req.files.vid.path || req.files.stack.path;
+function save_file ( file, dest, next ) {
+
+	var tmp_path = file;
 
 	// set where the file should actually exists - in this case it is in the "images" directory
 	var target_path = dest;// + req.files.upload.name;

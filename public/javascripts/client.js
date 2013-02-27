@@ -60,12 +60,10 @@ function submit_stack () {
         input = document.createElement('input'),
         form = document.getElementById('stack');
 
-    for(var i=0, l=images.length; i<l; i++) {
-        input.type = 'file';
-        input.name = 'stack_' + i;
-        console.log( encodeURIComponent(images[i].src) );
-        form.appendChild( input );
-    }
+    document
+        .location
+        .href = images[0].src;
+    // encodeURIComponent
 }
 
 
