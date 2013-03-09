@@ -7,10 +7,36 @@ a {
   color: #00B7FF;
 }
 
+.fps p { color: blue; } 
+#fps { 
+	color: #000; 
+	display: block;
+	margin-left: 6em;
+	margin-top: 1em;
+}
+
 #imgs img {
 	width: 25%;
 }
 
 #imageView {
 	display: none;
+}
+
+#files-upload {
+	position: absolute;
+	display: inline-block;
+	width: 9.5em;
+	left: 4.5em;
+	margin-top: 0.5em;
+	z-index: 5;
+	opacity: 0;
+}
+
+#saving {
+	margin-top: 0.8em;
+}
+
+button {
+	margin: 0.5em;
 }

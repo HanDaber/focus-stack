@@ -5,6 +5,7 @@
 
 var express = require('express')
   , routes = require('./routes')
+  , stacker = require('./stacker')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path');
@@ -28,11 +29,18 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
-app.post('/vid', routes.upload, function ( req, res ) {
-    res.redirect('/');
+
+app.post('/stack', routes.save, function ( req, res ) {
+    res.send('');
 });
-app.post('/stack', routes.save)
+
+app.post('/start', stacker.start, function ( req, res ) {
+  res.send('ok');
+});
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
+
+
+

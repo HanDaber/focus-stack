@@ -8,19 +8,14 @@ exports.index = function ( req, res ) {
   res.render('index', { title: 'focus stack' });
 };
 
-exports.upload = function ( req, res, next ) {
-	if( req.files ) {
-		console.dir(req.files.vid.path)
+exports.save = function ( req, res, next ) {
 
-		save_file(req.files.vid.path, 'public/video/vid.mp4', next);
+	var data = req.body.img.replace(/^data:image\/\w+;base64,/, "");
+	var name = req.body.name;
+	var buf = new Buffer(data, 'base64');
 
-	} else {
-		res.send('no file');
-	}
-};
+	fs.writeFile('stacker/' + name, buf, next);
 
-exports.save = function( req, res ) {
-	save_file('public/images/stack_' + Date.now);
 };
 
 function save_file ( file, dest, next ) {
@@ -38,7 +33,7 @@ function save_file ( file, dest, next ) {
 	    fs.unlink(tmp_path, function() {
 	        if (err) throw err;
 
-	        if ( next != null ) next();
+	        if ( next !== null ) next();
 
 	    });
 	});
