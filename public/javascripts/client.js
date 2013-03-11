@@ -124,11 +124,20 @@ function save_stack () {
 
 
 function start_stacking () {
-console.log('stack attack')
+    
+    $('#save').addClass('disabled');
+
+    $('#stack').addClass('disabled');
+    
+    $('#stacking').removeClass('hide');
+
     $.post('/start', {a: 'b'}, function ( data, status ) {
         console.dir(status);
 
         if( status === 'success' ) {
+
+            $('#stacking').addClass('hide');
+
             $('#show').on('click', function ( e ) {
                 e.preventDefault();
 
@@ -149,7 +158,7 @@ function capture () {
     ctxDraw.drawImage(video, 0, 0, w, h);
     ctxDraw.save();
 
-    data = Canvas2Image.convertToImage(canvasFromVideo, 1920, 1080, 'png');
+    data = Canvas2Image.convertToImage(canvasFromVideo, 1920, 1080, 'tif');
 
     images_buffer.appendChild( data );
 
