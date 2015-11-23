@@ -158,7 +158,11 @@ function capture () {
     ctxDraw.drawImage(video, 0, 0, w, h);
     ctxDraw.save();
 
-    data = Canvas2Image.convertToImage(canvasFromVideo, 1920, 1080, 'tif');
+    console.dir( canvasFromVideo );
+
+    data = Canvas2Image.convertToImage( canvasFromVideo, 1920, 1080, 'tif' );
+
+    console.dir( data );
 
     images_buffer.appendChild( data );
 

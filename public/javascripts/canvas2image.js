@@ -54,7 +54,7 @@ var Canvas2Image = function () {
 	}
 	function fixType (type) {
 		type = type.toLowerCase().replace(/jpg/i, 'jpeg');
-		var r = type.match(/png|jpeg|bmp|gif/)[0];
+		var r = type.match(/png|jpeg|bmp|gif|tif/)[0];
 		return 'image/' + r;
 	}
 	function encodeData (data) {
