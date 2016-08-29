@@ -3,12 +3,14 @@
   "version": "0.0.2",
   "private": true,
   "scripts": {
-    "start": "node app"
+    "start": "node app",
+    "arch": "echo \" UI( vid->slices ) FE( slices->STORAGE, stack->QUEUE ) BE( STORAGE->slices->stacked->STORAGE, message->MSG_QUEUE ) FE( STORAGE->stacked ) UI( stacked )\" "
   },
   "dependencies": {
+    "body-parser": "^1.15.2",
+    "execSync": "*",
     "express": "*",
-    "jade": "*",
-    "execSync": "*"
+    "jade": "*"
   },
   "engines": {
     "node": "0.6"

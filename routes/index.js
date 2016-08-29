@@ -14,7 +14,7 @@ exports.save = function ( req, res, next ) {
 	var name = req.body.name;
 	var buf = new Buffer(data, 'base64');
 
-	fs.writeFile('stacker/' + name, buf, next);
+	fs.writeFile('tests/temp/' + name, buf, next);
 
 };
 

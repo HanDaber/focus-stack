@@ -10,12 +10,25 @@ var video = document.getElementById("video"),
     range = document.getElementById("farps"),
     input = document.getElementById('files-upload'),
     dropArea = document.getElementById("drop-area"),
-    next_frame = 0;
+    next_frame = 0,
+    $file = $('#file'),
+    $grab = $('#grab'),
+    $fps = $('.fps'),
+    $fps_range = $('#fps_range'),
+    $video = $('.video'),
+    $fps_display = document.getElementById("fps"),
+    $imgs = $('#imgs'),
+    $saving = $('#saving'),
+    $save = $('#save'),
+    $stack = $('#stack'),
+    $grab_span = $('#grab span'),
+    $show = $('#show'),
+    $stacking = $('#stacking');
 
 input.addEventListener('change', handleFiles);
 ctxDraw = canvasDraw.getContext('2d');
 
-$('#file').on('click', function ( event ) {
+$file.on('click', function ( event ) {
     event.preventDefault();
 });
 
@@ -33,10 +46,10 @@ function handleFiles(e) {
 
     video.src = URL.createObjectURL( data );
 
-    $('#grab').removeClass('hide');
-    $('.fps').removeClass('hide');
-    $('#fps_range').removeClass('hide');
-    $('.video').removeClass('hide');
+    $grab.removeClass('hide');
+    $fps.removeClass('hide');
+    $fps_range.removeClass('hide');
+    $video.removeClass('hide');
 
 }
 
@@ -45,7 +58,7 @@ function handleFiles(e) {
 var fps_range = {
     'render': function () {
         var value = range.value;
-        document.getElementById("fps").innerHTML = value;
+        $fps_display.innerHTML = value;
     },
     'interval': function () {
         return (1000 / range.value);
@@ -61,23 +74,23 @@ function FrameGrabber () {}
 
 FrameGrabber.prototype.start = function () {
 
-    $('#imgs').html('');
+    $imgs.html('');
 
     video.addEventListener('ended', function ( e ) {
 
         imgs.appendChild( images_buffer );
 
-        $('#save').removeClass('hide');
-        $('#save').removeClass('disabled');
-        $('#grab span').html('Try again');
+        $save.removeClass('hide');
+        $save.removeClass('disabled');
+        $grab_span.html('Try again');
 
     }, false);
 
     video.addEventListener('timeupdate', function ( e ) {
 
         if( video.currentTime > next_frame ) {
-            console.log('current time: ' + video.currentTime);
-            console.log('capturing frame ' + next_frame);
+            // console.log('current time: ' + video.currentTime);
+            // console.log('capturing frame ' + next_frame);
             next_frame += 1 / parseFloat( range.value );
             capture();
         }
@@ -91,19 +104,19 @@ FrameGrabber.prototype.start = function () {
 function save_stack () {
 
     var frag = document.createDocumentFragment(),
-        images = $('#imgs').find('img');
+        images = $imgs.find('img');
 
-    console.log(images.length + ' images');
+    // console.log(images.length + ' images');
 
-    $('#saving').removeClass('hide');
+    $saving.removeClass('hide');
 
     var start_button_interval = setInterval(function () {
-        if( $('#imgs').find('img').length > 0 ) {
+        if( $imgs.find('img').length > 0 ) {
             
         } else {
-            $('#saving').addClass('hide');
-            $('#save').addClass('disabled');
-            $('#stack').removeClass('hide');
+            $saving.addClass('hide');
+            $save.addClass('disabled');
+            $stack.removeClass('hide');
             clearInterval( start_button_interval );
         }
     }, 500);
@@ -114,7 +127,7 @@ function save_stack () {
 
         setTimeout(function () {
             $.post('/stack', { img: elem.src, name: image_name }, function ( data, status ) {
-                console.dir(status);
+                // console.dir(status);
             })
         }, 10);
 
@@ -125,25 +138,25 @@ function save_stack () {
 
 function start_stacking () {
     
-    $('#save').addClass('disabled');
+    $save.addClass('disabled');
 
-    $('#stack').addClass('disabled');
+    $stack.addClass('disabled');
     
-    $('#stacking').removeClass('hide');
+    $stacking.removeClass('hide');
 
     $.post('/start', {a: 'b'}, function ( data, status ) {
-        console.dir(status);
+        // console.dir(status);
 
         if( status === 'success' ) {
 
-            $('#stacking').addClass('hide');
+            $stacking.addClass('hide');
 
-            $('#show').on('click', function ( e ) {
+            $show.on('click', function ( e ) {
                 e.preventDefault();
 
                 window.open("/images/stacked.png");
             });
-            $('#show').removeClass('hide');
+            $show.removeClass('hide');
         }
     });
 }
@@ -151,21 +164,26 @@ function start_stacking () {
 
 function capture () {
 
+    video.pause();
+
     var data;
 
-    ctxDraw.clearRect(0, 0, w, h);
+    ctxDraw.clearRect( 0, 0, w, h );
 
-    ctxDraw.drawImage(video, 0, 0, w, h);
+    ctxDraw.drawImage( video, 0, 0, w, h );
     ctxDraw.save();
 
-    console.dir( canvasFromVideo );
+    // console.dir( canvasFromVideo );
 
     data = Canvas2Image.convertToImage( canvasFromVideo, 1920, 1080, 'tif' );
 
-    console.dir( data );
+    // console.dir( data );
 
     images_buffer.appendChild( data );
 
+    setTimeout(function(){
+        video.play();
+    }, 1 )
 }
 
 
