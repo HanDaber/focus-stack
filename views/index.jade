@@ -3,9 +3,10 @@ extends layout
 block content
 	center
 		h3 Pic-Fil-A
+		p Convert the right kind of video from YouTube into a focus-stacked image
 	input#files-upload(type="file", 
 		accept="video")
-	button#file.btn.btn-primary Choose Video File
+	button#file.btn.btn-primary.hide Choose Video File
 	button#yt.btn.btn-primary YouTube Video
 	button#grab.btn.btn-primary.hide(onclick="frame_grabber.start()") 
 		span Start
@@ -22,7 +23,7 @@ block content
 		p Capture framerate (0.25 - 3): 
 		em
 			Current: <strong id="fps"></strong>
-	form#fps_range.hide(name="poop")
+	form#fps_range.hide(name="plob")
 		input#farps(type="range", 
 			min="0.25", 
 			max="3", 
