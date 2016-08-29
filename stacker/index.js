@@ -3,6 +3,8 @@ var util = require('util'),
 
 exports.start = function ( req, res, next ) {
 
+	console.log('Start stacking...')
+
 	stack = spawn('bash', ['stacker/stack.sh']);
 
 	stack.stdout.on('data', function (data) {    // register one or more handlers

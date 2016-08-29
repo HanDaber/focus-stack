@@ -31,7 +31,7 @@ var app = express();
 
 app.get('/', routes.index);
 
-app.post('/video', function( req, res, next ){ res.send( req.body.video_id ); next(); }, routes.video, function( req, res ) {
+app.post('/video', routes.video, stacker.start, function( req, res ) {
     res.send('ok');
 });
 

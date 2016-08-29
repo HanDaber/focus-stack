@@ -13,7 +13,7 @@ exports.index = function ( req, res ) {
 
 exports.video = function ( req, res, next ) {
 
-	console.log('ok')
+	console.log('Downloading video')
 
 	var video = youtubedl('http://www.youtube.com/watch?v='+req.body.video_id,
 		// Optional arguments passed to youtube-dl.
@@ -27,6 +27,12 @@ exports.video = function ( req, res, next ) {
 	  console.log('filename: ' + info.filename);
 	  console.log('size: ' + info.size);
 	});
+
+	video.on('end', function(){
+		console.log('Download finished')
+
+		next();
+	})
 
 	video.pipe( fs.createWriteStream('tests/temp/'+'stack_me.mp4'));
 };

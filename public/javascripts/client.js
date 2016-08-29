@@ -34,15 +34,27 @@ $file.on('click', function ( event ) {
 });
 
 $yt.on('click', function ( event ) {
-    var id = prompt('VIDEO ID')
+    var id = prompt('VIDEO ID:', 'z5zOIg4e48U')
 
     console.log( id )
+
+    $stacking.removeClass('hide');
 
     $.post('/video', { video_id: id }, function( data, status ){
         console.log( data )
         console.log( status )
-        $stack.removeClass('hide');
-        $stack.removeClass('disabled');
+
+        if( status === 'success' ) {
+
+            $stacking.addClass('hide');
+
+            $show.on('click', function ( e ) {
+                e.preventDefault();
+
+                window.open("/images/stacked.png");
+            });
+            $show.removeClass('hide');
+        }
     })
 });
 
