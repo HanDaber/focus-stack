@@ -1,4 +1,7 @@
 var fs = require('fs');
+var youtubedl = require('youtube-dl');
+
+
 
 /*
  * GET home page.
@@ -6,6 +9,26 @@ var fs = require('fs');
 
 exports.index = function ( req, res ) {
   res.render('index', { title: 'focus stack' });
+};
+
+exports.video = function ( req, res, next ) {
+
+	console.log('ok')
+
+	var video = youtubedl('http://www.youtube.com/watch?v='+req.body.video_id,
+		// Optional arguments passed to youtube-dl.
+		['--format=18'],
+		// Additional options can be given for calling `child_process.execFile()`.
+		{ cwd: __dirname });
+
+	// Will be called when the download starts.
+	video.on('info', function(info) {
+	  console.log('Download started');
+	  console.log('filename: ' + info.filename);
+	  console.log('size: ' + info.size);
+	});
+
+	video.pipe( fs.createWriteStream('tests/temp/'+'stack_me.mp4'));
 };
 
 exports.save = function ( req, res, next ) {

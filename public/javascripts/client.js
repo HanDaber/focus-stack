@@ -12,6 +12,7 @@ var video = document.getElementById("video"),
     dropArea = document.getElementById("drop-area"),
     next_frame = 0,
     $file = $('#file'),
+    $yt = $('#yt'),
     $grab = $('#grab'),
     $fps = $('.fps'),
     $fps_range = $('#fps_range'),
@@ -30,6 +31,19 @@ ctxDraw = canvasDraw.getContext('2d');
 
 $file.on('click', function ( event ) {
     event.preventDefault();
+});
+
+$yt.on('click', function ( event ) {
+    var id = prompt('VIDEO ID')
+
+    console.log( id )
+
+    $.post('/video', { video_id: id }, function( data, status ){
+        console.log( data )
+        console.log( status )
+        $stack.removeClass('hide');
+        $stack.removeClass('disabled');
+    })
 });
 
 
@@ -129,7 +143,7 @@ function save_stack () {
             $.post('/stack', { img: elem.src, name: image_name }, function ( data, status ) {
                 // console.dir(status);
             })
-        }, 10);
+        }, 100 );
 
         $(this).fadeOut(300).remove();
     });

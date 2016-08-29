@@ -10,7 +10,8 @@
     "body-parser": "^1.15.2",
     "execSync": "*",
     "express": "*",
-    "jade": "*"
+    "jade": "*",
+    "youtube-dl": "^1.11.1"
   },
   "engines": {
     "node": "0.6"
