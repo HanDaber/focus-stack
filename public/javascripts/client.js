@@ -24,9 +24,10 @@ var video = document.getElementById("video"),
     $stack = $('#stack'),
     $grab_span = $('#grab span'),
     $show = $('#show'),
-    $stacking = $('#stacking');
+    $stacking = $('#stacking'),
+    $yt_id = $('#yt_id');
 
-input.addEventListener('change', handleFiles);
+// input.addEventListener('change', handleFiles);
 ctxDraw = canvasDraw.getContext('2d');
 
 $file.on('click', function ( event ) {
@@ -34,13 +35,18 @@ $file.on('click', function ( event ) {
 });
 
 $yt.on('click', function ( event ) {
-    var id = prompt('VIDEO ID:', 'z5zOIg4e48U')
+    event.preventDefault();
+
+    var id = $yt_id.val() || $yt_id.attr('placeholder');
+
+    if( !id ) return;
 
     console.log( id )
 
     $stacking.removeClass('hide');
 
     $.post('/video', { video_id: id }, function( data, status ){
+        // times out
         console.log( data )
         console.log( status )
 
@@ -48,16 +54,33 @@ $yt.on('click', function ( event ) {
 
             $stacking.addClass('hide');
 
-            $show.on('click', function ( e ) {
-                e.preventDefault();
+            // $show.on('click', function ( e ) {
+            //     e.preventDefault();
 
-                window.open("/images/stacked.png");
-            });
+            //     window.open("/images/stacked.png");
+            // });
             $show.removeClass('hide');
+        } else {
+            console.log('fail or timeout')
         }
     })
+
+    setTimeout( pollForImage, 5000 )
 });
 
+
+function pollForImage(){
+    console.log('pollForImage ing')
+    $.get('/images/stacked.png', function(){
+        
+        window.open("/images/stacked.png")
+
+    }).error(function( e ){
+        if( e.status == 404 ){
+            setTimeout( pollForImage, 5000 )
+        }
+    })
+}
 
 
 function handleFiles(e) {

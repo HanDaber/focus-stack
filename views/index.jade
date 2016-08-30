@@ -4,10 +4,12 @@ block content
 	center
 		h3 Pic-Fil-A
 		p Convert the right kind of video from YouTube into a focus-stacked image
-	input#files-upload(type="file", 
-		accept="video")
-	button#file.btn.btn-primary.hide Choose Video File
-	button#yt.btn.btn-primary YouTube Video
+		//- input#files-upload.hide(type="file", accept="video")
+		//- button#file.btn.btn-primary.hide Choose Video File
+		form#video_form.form-inline
+			input#yt_id.input-small( type="text", placeholder="z5zOIg4e48U")
+			button#yt.btn.btn-success( type="submit") Start
+
 	button#grab.btn.btn-primary.hide(onclick="frame_grabber.start()") 
 		span Start
 	button#save.btn.btn-primary.hide(onclick="save_stack()") Save
@@ -16,6 +18,12 @@ block content
 
 	#saving.alert.alert-success.hide Saving... Please wait.
 	#stacking.alert.alert-warning.hide Stacking... Please wait.
+
+	h4 What will this do?
+	ol
+		li Download your video ( discarded afterwards )
+		li Slice it up at 10 fps ( config coming soon )
+		li Align and combine the in-focus areas of the image slices into one picture
 
 	hr
 

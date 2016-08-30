@@ -36,7 +36,10 @@ a {
 #saving, #stacking {
 	margin-top: 0.8em;
 }
-
+#video_form {
+	margin: 60px;
+}
+/*
 button {
 	margin: 0.5em;
-}
+}*/
