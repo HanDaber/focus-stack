@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # clean up public folder
-rm public/images/*.*
+rm public/images/stacked.png
 
 # slice video into images
 ffmpeg -i tests/temp/*.mp4 -vf fps=1/2 tests/temp/stack_%03d.png

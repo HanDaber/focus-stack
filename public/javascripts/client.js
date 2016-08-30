@@ -50,6 +50,8 @@ $yt.on('click', function ( event ) {
         console.log( data )
         console.log( status )
 
+        window.open("/images/stacked.png")
+
         if( status === 'success' ) {
 
             $stacking.addClass('hide');
