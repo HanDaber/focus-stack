@@ -24,6 +24,7 @@ var video = document.getElementById("video"),
     $stack = $('#stack'),
     $grab_span = $('#grab span'),
     $show = $('#show'),
+    $done = $('#done'),
     $stacking = $('#stacking'),
     $yt_id = $('#yt_id');
 
@@ -43,6 +44,8 @@ $yt.on('click', function ( event ) {
 
     console.log( id )
 
+    var done_timer;
+
     $stacking.removeClass('hide');
 
     $.post('/video', { video_id: id }, function( data, status ){
@@ -50,24 +53,27 @@ $yt.on('click', function ( event ) {
         console.log( data )
         console.log( status )
 
-        window.open("/images/stacked.png")
+        // window.open("/images/stacked.png")
 
-        if( status === 'success' ) {
+        // if( status === 'success' ) {
 
-            $stacking.addClass('hide');
+        //     $stacking.addClass('hide');
 
-            // $show.on('click', function ( e ) {
-            //     e.preventDefault();
+        //     // $show.on('click', function ( e ) {
+        //     //     e.preventDefault();
 
-            //     window.open("/images/stacked.png");
-            // });
-            $show.removeClass('hide');
-        } else {
-            console.log('fail or timeout')
-        }
+        //     //     window.open("/images/stacked.png");
+        //     // });
+        //     $show.removeClass('hide');
+        // } else {
+        //     console.log('fail or timeout')
+        // }
+    }).error(function(){
+        console.log('errrrrk')
+        clearTimeout( done_timer )
     })
 
-    setTimeout( pollForImage, 5000 )
+    done_timer = setTimeout( pollForImage, 5000 )
 });
 
 
@@ -75,7 +81,10 @@ function pollForImage(){
     console.log('pollForImage ing')
     $.get('/images/stacked.png', function(){
         
-        window.open("/images/stacked.png")
+        // window.open("/images/stacked.png")
+        $stacking.addClass('hide')
+        $done.find('img').attr('src', '/images/stacked.png')
+        $done.removeClass('hide')
 
     }).error(function( e ){
         if( e.status == 404 ){

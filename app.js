@@ -11,10 +11,11 @@ var express = require('express')
   , path = require('path'),
   bodyParser = require('body-parser');
 
-var app = express();
+var app = express(),
+    PORT = process.env.PORT || 3000;
 
 // app.configure(function(){
-  app.set('port', process.env.PORT || 3000 );
+  app.set('port', PORT );
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
 //   app.use(express.favicon());
@@ -29,6 +30,7 @@ var app = express();
 //   app.use(express.errorHandler());
 // });
 
+
 app.get('/', routes.index);
 
 app.post('/video', routes.video, stacker.start, function( req, res ) {
@@ -40,12 +42,24 @@ app.post('/stack', routes.save, function ( req, res ) {
 });
 
 app.post('/start', stacker.start, function ( req, res ) {
-  res.send('ok');
+    res.send('ok');
 });
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log("Express server listening on port " + app.get('port'));
+
+var pipe_to_browser = require('pipe-to-browser'),
+    spawn = require('child_process').spawn;
+
+
+http.createServer( app, function( req, res ){
+    var stack = spawn('echo hi');
+
+    pipe_to_browser.pipeResponse( {}, res, stack.stdout );
 });
+
+app.listen( PORT, function(){
+    console.log("Express server listening on port " + PORT );
+});
+
 
 
 

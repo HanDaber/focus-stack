@@ -4,7 +4,7 @@
 rm public/images/stacked.png
 
 # slice video into images
-ffmpeg -i tests/temp/*.mp4 -vf fps=1/2 tests/temp/stack_%03d.png
+ffmpeg -i tests/temp/*.mp4 -vf fps=1/3 tests/temp/stack_%03d.png
 
 # align slices
 stacker/bin/align_image_stack -i -x -y -z -a tests/temp/aligned_ tests/temp/stack_???.png

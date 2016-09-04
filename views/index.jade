@@ -2,27 +2,34 @@ extends layout
 
 block content
 	center
-		h3 Pic-Fil-A
-		p Convert the right kind of video from YouTube into a focus-stacked image
+		h3 
+			span Pic-Fil-A
+			small &nbsp; beta
+		p Convert (the right kind of) video from YouTube into a focus-stacked image
 		//- input#files-upload.hide(type="file", accept="video")
 		//- button#file.btn.btn-primary.hide Choose Video File
 		form#video_form.form-inline
+			label( for="yt_id") Enter youtube video ID: &nbsp;
 			input#yt_id.input-small( type="text", placeholder="z5zOIg4e48U")
 			button#yt.btn.btn-success( type="submit") Start
 
-	button#grab.btn.btn-primary.hide(onclick="frame_grabber.start()") 
+	button#grab.btn.btn-primary.hide( onclick="frame_grabber.start()") 
 		span Start
-	button#save.btn.btn-primary.hide(onclick="save_stack()") Save
-	button#stack.btn.btn-primary.hide(onclick="start_stacking()") Stack 'em
+	button#save.btn.btn-primary.hide( onclick="save_stack()") Save
+	button#stack.btn.btn-primary.hide( onclick="start_stacking()") Stack 'em
 	button#show.btn.btn-primary.hide Show
 
 	#saving.alert.alert-success.hide Saving... Please wait.
 	#stacking.alert.alert-warning.hide Stacking... Please wait.
+	#done.alert.alert-success.hide
+		p Your stacked image:
+		center
+			img( src="", alt="Loading...")
 
 	h4 What will this do?
 	ol
 		li Download your video ( discarded afterwards )
-		li Slice it up at 10 fps ( config coming soon )
+		li Slice it up in 3 second intervals ( config coming soon )
 		li Align and combine the in-focus areas of the image slices into one picture
 
 	hr

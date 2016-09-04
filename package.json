@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node app",
+    "dev": "node app | pipe-to-browser",
     "arch": "echo \" UI( vid->slices ) FE( slices->STORAGE, stack->QUEUE ) BE( STORAGE->slices->stacked->STORAGE, message->MSG_QUEUE ) FE( STORAGE->stacked ) UI( stacked )\" "
   },
   "dependencies": {
@@ -11,6 +12,7 @@
     "execSync": "*",
     "express": "*",
     "jade": "*",
+    "pipe-to-browser": "^1.0.4",
     "youtube-dl": "^1.11.1"
   },
   "engines": {
