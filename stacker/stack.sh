@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # init
-mkdir tests/temp
+mkdir tests/temp public/images
 
 # clean up public folder
 rm public/images/stacked.png
