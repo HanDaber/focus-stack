@@ -34,13 +34,20 @@ exports.video = function ( req, res, next ) {
 		next();
 	})
 
-	var dir = 'tests/temp';
+	var vid_dir = 'tests/temp';
 
-	if ( ! fs.existsSync( dir ) ){
-	    fs.mkdirSync( dir )
+	if ( ! fs.existsSync( vid_dir ) ){
+	    fs.mkdirSync( vid_dir )
 	}
 
-	video.pipe( fs.createWriteStream( dir+'/stack_me.mp4'));
+	video.pipe( fs.createWriteStream( vid_dir+'/stack_me.mp4'));
+
+
+	var done_dir = 'public/images';
+
+	if ( ! fs.existsSync( done_dir ) ){
+	    fs.mkdirSync( done_dir )
+	}
 };
 
 exports.save = function ( req, res, next ) {
