@@ -34,7 +34,13 @@ exports.video = function ( req, res, next ) {
 		next();
 	})
 
-	video.pipe( fs.createWriteStream('tests/temp/'+'stack_me.mp4'));
+	var dir = 'tests/temp';
+
+	if ( ! fs.existsSync( dir ) ){
+	    fs.mkdirSync( dir )
+	}
+
+	video.pipe( fs.createWriteStream( dir+'/stack_me.mp4'));
 };
 
 exports.save = function ( req, res, next ) {
